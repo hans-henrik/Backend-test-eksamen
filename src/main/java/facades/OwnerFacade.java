@@ -11,6 +11,7 @@ package facades;
  */
 import dtos.OwnerDTO;
 import entities.Owner;
+import errorhandling.API_Exception;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -43,10 +44,15 @@ public class OwnerFacade {
     }
     
     
-       public List<Owner> getAllOwners1() {
+       public List<Owner> getAllOwners1() throws API_Exception {
         EntityManager em = emf.createEntityManager();
+        try{
         TypedQuery<Owner> query = em.createQuery("SELECT o FROM Owner o", Owner.class);
         return query.getResultList();
+        }catch (Exception e)
+        {
+            throw new API_Exception(e.getMessage());
+        }
     }
     
 }
