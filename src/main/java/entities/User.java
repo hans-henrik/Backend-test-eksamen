@@ -1,5 +1,6 @@
 package entities;
 
+import dtos.UserDTO;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,19 +48,22 @@ public class User implements Serializable {
     return rolesAsStrings;
   }
 
-  public User() {}
+   public User() {}
 
-  //TODO Change when password is hashed
-   public boolean verifyPassword(String pw){
-        return(pw.equals(userPass));
-    }
+  public boolean verifyPassword(String pw){
+    return(BCrypt.checkpw(pw,userPass));
+  }
 
   public User(String userName, String userPass) {
     this.userName = userName;
-
-    this.userPass = userPass;
+    this.userPass = BCrypt.hashpw(userPass,BCrypt.gensalt());
   }
-
+  
+   public User(UserDTO u) {
+       // if (u.getId() != null) this.id = u.getId();
+        this.userName = u.getUserName();
+        this.userPass = u.getUserPass();
+    }
 
   public String getUserName() {
     return userName;
