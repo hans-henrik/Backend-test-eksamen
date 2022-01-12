@@ -86,7 +86,7 @@ public class OwnerResoruceTest extends TestCase {
         }
     }
      @Test
-    public void testOwnerByName(){
+    public void testOwnerByName(){ 
         given()
                 .contentType(MediaType.APPLICATION_JSON)
                 .get("/owner/show").then()
